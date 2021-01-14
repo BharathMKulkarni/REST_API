@@ -33,23 +33,21 @@ app.post("/",(req,res)=>{
 
 
 app.get("/edit/:userid",(req,res)=>{
-    User.findById(req.params.userid,(err,user)=>{
-        res.render("./edit.ejs",{user})
+    User.findById(req.params.userid,(err,findUser)=>{//req.params gets the value from the url
+        res.render("./edit.ejs",{findUser:user})
     })
-  
 })
 
-app.put("/edit/:id",async(req,res)=>{
+app.put("/edit/:id",(req,res)=>{
     var NewUser={
         username:req.body.username,
         email:req.body.email
     }
-    await User.findByIdAndUpdate(req.params.id,NewUser,(err,user)=>{
+     User.findByIdAndUpdate(req.params.id,NewUser,(err,updatedUser)=>{
         if(err){
             throw err;
         }
-              console.log(user);
- 
+              console.log(updatedUser);
     })
     res.redirect("/")
 })

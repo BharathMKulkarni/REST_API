@@ -7,37 +7,6 @@ const bodyParser = require("body-parser");
 const User=require("./models/user")
 const postRoute = require('./routes/input');
 
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(methodOverride("_method"));
-
-
-// FOUR MAIN REST METHODS:
-// POST(create),GET(read),PUT(update),DELETE(delete)
-
-app.get('/',(req,res)=>{
-    res.send("hello world");
-})
-
-app.get('/display',(req,res)=>{
-    User.find({},(err,User)=>{
-        res.render("display.ejs",{User})
-    })
-})
-
-app.use('/post',postRoute);
-
-app.listen(4500,(err)=>{
-    if(err){
-        console.log('why?'+err);
-    }
-    else{
-        console.log("server running on port 4500");
-    }
-})
-
-
-
 //connecting to the database:
 mongoose.connect('mongodb://localhost/example',{
     useNewUrlParser:true,
@@ -50,4 +19,43 @@ mongoose.connect('mongodb://localhost/example',{
     else
         console.log("connnected to the DB")});
 
-// app.locals.moment = require('moment');
+//MIDDLEWEARS
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
+app.use('/post',postRoute);
+
+// FOUR MAIN REST METHODS:
+// POST(create),GET(read),PUT(update),DELETE(delete)
+
+
+//=========================================================================
+app.get('/',(req,res)=>{ //root route
+    res.send("hello world");
+})
+
+//==============================================================================
+
+
+//display route which displays all the user
+app.get('/display',(req,res)=>{
+    User.find({},(err,allUser)=>{//User.find({}) gets all the user and stores in allUser
+        res.render("display.ejs",{allUser})//allUser is sent to display.ejs 
+    })
+})
+
+//==============================================================================================
+
+app.listen(4500,(err)=>{
+    if(err){
+        console.log('why?'+err);
+    }
+    else{
+        console.log("server running on port 4500");
+    }
+})
+
+
+
+
+
+
