@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%User.forEach(function(user){%>
+        <tr>
+            <td><%=user.username%></td>
+            <td><%=user.email%></td>
+            <td><a href="/post/edit/<%=user._id%>">edit</a></td>
+            <td><form action="/post/delete/<%=user._id%>?_method=DELETE" method='POST'>
+            <input type="submit" value="Delete">
+            </form></td>
+        </tr>
+        <br>
+   <% })%>
+</body>
+</html>
